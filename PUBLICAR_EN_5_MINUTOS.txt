@@ -1,0 +1,38 @@
+PUBLICAR Y COMPARTIR · PLAN MAESTRO QA ERP
+===========================================
+
+1) FIRESTORE RULES
+   - Antes de tocar reglas, copie/guarde la versión actual de Firestore Rules.
+   - Opción recomendada: integre SOLO el bloque de firestore.rules.snippet en las reglas vigentes.
+   - firestore.rules.merged se incluye como referencia basada en EI ERP Nova V6.2; no lo publique a ciegas si las reglas actuales cambiaron.
+
+2) PUBLICAR EL SITIO
+   - Suba la carpeta completa erp-qa-tracker a un hosting estático (GitHub Pages, Vercel, Firebase Hosting, etc.).
+   - index.html debe quedar como entrada principal.
+
+3) AUTENTICACIÓN
+   - Para editar/guardar, el dominio publicado debe estar autorizado en Firebase Authentication > Settings > Authorized domains.
+   - Ingrese con una cuenta activa del ERP de Trazabilidad Logística.
+
+4) PRIMER GUARDADO
+   - Abra la URL normal.
+   - Pulse “Conectar / sesión”.
+   - Inicie sesión.
+   - Actualice una actividad o escenario y pulse “Guardar avance”.
+   - Esto crea/actualiza:
+       erpQaTracker/erp-launch-2026
+       erpQaPublic/erp-launch-2026
+
+5) ENLACE PARA EL SUPERIOR
+   - Comparta la misma URL agregando: ?executive=1
+   - Esa vista oculta controles de edición y no publica pedidos, clientes, tickets ni evidencias internas.
+
+PLAN BASE
+---------
+Inicio: 19/08/2026
+Fecha objetivo: 11/09/2026
+Días hábiles: 18
+Carga planificada: 126 h
+Capacidad usada: 7 h/día
+Jornada laboral ERP: 07:00-12:00 y 13:40-17:30
+Cobertura: 156 escenarios + correcciones + re-pruebas + regresión final.

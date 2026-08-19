@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#12253d">
+  <title>Plan Maestro QA · ERP Trazabilidad Logística</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='16' width='64' height='64' fill='%2312253d'/%3E%3Cpath d='M17 18h30v28H17z' fill='none' stroke='white' stroke-width='4'/%3E%3Cpath d='M17 27h30M25 14v9M39 14v9' stroke='white' stroke-width='4'/%3E%3Cpath d='m25 36 5 5 10-11' fill='none' stroke='%236fd3b0' stroke-width='4'/%3E%3C/svg%3E">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brandmark">QA</div>
+          <div><h1>ERP · Trazabilidad Logística</h1><p>Plan de validación, corrección y salida controlada</p></div>
+        </div>
+        <div class="top-actions">
+          <span class="pill"><span id="connectionDot" class="dot local"></span><span id="connectionLabel">Modo local</span></span>
+          <span class="pill" id="userPill">Sin sesión Firebase</span>
+          <button class="btn secondary editor-only" id="loginBtn">Conectar / sesión</button>
+          <button class="btn secondary" id="printBtn">Imprimir / PDF</button>
+          <button class="btn" id="saveBtn">Guardar avance</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Plan maestro · QA integral · Colombia</span>
+          <h2>Validación completa del ERP antes de su lanzamiento.</h2>
+          <p>Seguimiento temporal para documentar el avance real de pruebas PVE, PVC, PVP y PVN, excepciones, Corte, inventario, despachos, calendario, seguridad, correcciones y regresión final.</p>
+        </div>
+        <div class="hero-side">
+          <div class="hero-panel"><span>Inicio del ciclo</span><strong>19 ago 2026</strong><small>Miércoles · America/Bogota</small></div>
+          <div class="hero-panel"><span>Fecha objetivo base</span><strong id="heroTarget">11 sep 2026</strong><small>Calculada solo en días hábiles</small></div>
+          <div class="hero-panel"><span>Capacidad planificada</span><strong>7 h / día</strong><small>Dentro de jornada 07:00–12:00 · 13:40–17:30</small></div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="Vistas">
+      <button class="tab active" data-view="executive">Resumen ejecutivo</button>
+      <button class="tab" data-view="roadmap">Cronograma</button>
+      <button class="tab" data-view="matrix">Matriz de pruebas</button>
+      <button class="tab" data-view="defects">Hallazgos y correcciones</button>
+    </nav>
+
+    <section id="view-executive" class="view">
+      <div class="executive-note" id="modeNote"><b>Vista ejecutiva:</b> el cronograma usa días hábiles de Colombia y reserva capacidad para documentar evidencias y corregir hallazgos, en lugar de comprimir artificialmente las pruebas en los días restantes de agosto.</div>
+      <div class="section">
+        <div class="kpis">
+          <article class="kpi"><div class="label">Avance QA</div><div class="value" id="kpiProgress">0%</div><div class="sub">Escenarios aprobados</div></article>
+          <article class="kpi"><div class="label">Escenarios</div><div class="value" id="kpiCases">156</div><div class="sub">Cobertura base planificada</div></article>
+          <article class="kpi"><div class="label">Horas plan</div><div class="value" id="kpiHours">126</div><div class="sub">18 jornadas × 7 h</div></article>
+          <article class="kpi"><div class="label">Bloqueantes</div><div class="value" id="kpiCritical">0</div><div class="sub">Hallazgos críticos abiertos</div></article>
+          <article class="kpi"><div class="label">Fecha objetivo</div><div class="value" id="kpiDate" style="font-size:22px">11 sep</div><div class="sub">Sujeta a defectos críticos</div></article>
+        </div>
+      </div>
+
+      <div class="section grid-2">
+        <article class="card">
+          <h4>Estado de la validación</h4><p class="desc">Lectura por tipo de pedido y frentes transversales.</p>
+          <div class="progress-wrap">
+            <div class="ring" id="progressRing"><div style="position:relative;z-index:2;text-align:center"><b id="ringValue">0%</b><small>aprobado</small></div></div>
+            <div class="progress-list" id="streamProgress"></div>
+          </div>
+        </article>
+        <article class="card">
+          <h4>Riesgos de salida</h4><p class="desc">Condiciones que pueden mover la fecha de lanzamiento.</p>
+          <div class="risk-list" id="riskList"></div>
+        </article>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><div><h3>Próximas jornadas</h3><p>Qué se está trabajando y qué sigue.</p></div></div>
+        <div class="timeline" id="nextDays"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><div><h3>Ruta de salida</h3><p>El lanzamiento se autoriza únicamente al cumplir los gates críticos.</p></div></div>
+        <div class="card">
+          <div class="risk-list">
+            <div class="risk critical"><span class="badge">Gate 01</span><div><b>Sin defectos bloqueantes abiertos</b><p>Un bloqueo de integridad, seguridad o flujo detiene el Go/No-Go.</p></div><span>✓</span></div>
+            <div class="risk"><span class="badge">Gate 02</span><div><b>PVE, PVC, PVP y PVN con E2E aprobado</b><p>Incluyendo novedades y sus conexiones con módulos posteriores.</p></div><span>✓</span></div>
+            <div class="risk"><span class="badge">Gate 03</span><div><b>Corte, inventario y despachos consistentes</b><p>Sin duplicidades, cantidades incongruentes ni cierres sin evidencia.</p></div><span>✓</span></div>
+            <div class="risk"><span class="badge">Gate 04</span><div><b>Concurrencia, seguridad y recuperación verificadas</b><p>Roles, RLS/Rules, doble edición, red intermitente y reintentos.</p></div><span>✓</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-roadmap" class="view hidden">
+      <div class="section">
+        <div class="section-head">
+          <div><h3>Cronograma lógico</h3><p>18 días hábiles · 126 horas efectivas planificadas · fines de semana y festivos excluidos.</p></div>
+          <div class="section-actions editor-only"><button class="btn secondary" id="resetPlanBtn">Restaurar plan base</button><button class="btn secondary" id="exportBtn">Exportar CSV</button></div>
+        </div>
+        <div class="calendar-strip"><div class="gantt" id="gantt"></div></div>
+      </div>
+      <div class="section"><div class="timeline" id="fullTimeline"></div></div>
+    </section>
+
+    <section id="view-matrix" class="view hidden">
+      <div class="section">
+        <div class="section-head">
+          <div><h3>Matriz maestra de pruebas</h3><p>156 escenarios base; las re-pruebas no inflan el número de cobertura.</p></div>
+          <div class="filters">
+            <select id="filterType" class="select"><option value="">Todos los tipos</option><option>PVE</option><option>PVC</option><option>PVP</option><option>PVN</option><option>Todos</option></select>
+            <select id="filterStatus" class="select"><option value="">Todos los estados</option><option value="pending">Pendiente</option><option value="in_progress">En prueba</option><option value="approved">Aprobado</option><option value="failed">Fallido</option><option value="retest">Re-prueba</option><option value="blocked">Bloqueado</option></select>
+            <input id="filterText" class="input" placeholder="Buscar escenario...">
+          </div>
+        </div>
+        <div class="table-wrap"><table class="data-table"><thead><tr><th>ID</th><th>Fecha plan</th><th>Prioridad</th><th>Tipo</th><th>Variante / condición</th><th>Ruta</th><th>Resultado esperado</th><th>Estado</th><th class="editor-only">Acción</th></tr></thead><tbody id="matrixBody"></tbody></table></div>
+        <div class="matrix-footer"><span id="matrixCount">0 escenarios</span><div class="pager"><button class="btn secondary small" id="prevPage">Anterior</button><span class="pill" id="pageInfo">1 / 1</span><button class="btn secondary small" id="nextPage">Siguiente</button></div></div>
+      </div>
+    </section>
+
+    <section id="view-defects" class="view hidden">
+      <div class="section grid-2">
+        <article class="card">
+          <div class="section-head"><div><h3>Hallazgos</h3><p>Defectos, decisiones y re-pruebas.</p></div><button class="btn editor-only" id="newDefectBtn">Registrar hallazgo</button></div>
+          <div class="defects" id="defectList"></div>
+        </article>
+        <article class="card">
+          <h4>Criterio de priorización</h4><p class="desc">Usado para explicar al superior por qué una corrección puede mover la fecha.</p>
+          <div class="risk-list">
+            <div class="risk critical"><span class="badge">Crítico</span><div><b>Bloquea salida</b><p>Pérdida/corrupción de datos, seguridad, flujo imposible o cierre incorrecto.</p></div></div>
+            <div class="risk"><span class="badge">Alto</span><div><b>Corregir antes de liberar</b><p>Funcionalidad principal incorrecta con workaround poco seguro.</p></div></div>
+            <div class="risk"><span class="badge" style="background:#e7f4fb;color:#245d92">Medio</span><div><b>Puede entrar a backlog</b><p>No rompe el flujo principal, pero afecta experiencia o eficiencia.</p></div></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">Plan temporal de seguimiento · No almacena datos operativos de clientes/pedidos en el resumen ejecutivo · Última actualización: <span id="lastUpdate">sin guardar</span></footer>
+  </main>
+
+  <div id="modal" class="modal-backdrop hidden" role="dialog" aria-modal="true"><div class="modal" id="modalContent"></div></div>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
